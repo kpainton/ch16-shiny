@@ -7,6 +7,7 @@ source('./scripts/build_scatter.R')
 df <- read.csv('./data/electoral_college.csv', stringsAsFactors = FALSE)
 state_codes <- read.csv('./data/state_codes.csv', stringsAsFactors = FALSE)
 
+
 # Join together state.codes and df
 joined_data <- left_join(df, state_codes, by="state")
 
@@ -20,6 +21,8 @@ shinyServer(function(input, output) {
   output$map <- renderPlotly({ 
       return(build_map(joined_data, input$mapvar))
   }) 
+  output$plot <- renderPlotly({
+      return(build_scatter(joined_data, input$search))
+  })
   
- 
 })
